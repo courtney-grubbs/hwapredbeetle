@@ -110,12 +110,20 @@ plot(survey_points_p, add = T)
 write.csv(surveys, "surveys_wtp22_23_e.csv")
 surveys <- read.csv("surveys_wtp22_23_e.csv") #with temp22-23 + elevation
 
-#did not run this code yet
+#hemlockbiomass
 hemlockbiomass <- rast(file.path("/Volumes/cmjone25/Data/Original/bigmap fs tree species biomass/BIGMAP_AGB_2018_SPCD0261_EASTERN_HEMLOCK/Hosted_AGB_0261_2018_EASTERN_HEMLOCK_06062023072438.tif"))
 survey_points_p <- terra::project(survey_points, hemlockbiomass)
 buffers <- buffer(survey_points_p, 5000)
+hemlockbiomassc <- crop(hemlockbiomass, buffers)
+surveys$hemlockbiomass <- extract(hemlockbiomassc, survey_points_p)
+plot(hemlockbiomassc)
+plot(survey_points_p, add = T)
 
-#reprojection of data
+####saving work as i go to build columns in surveys (dataframe)
+write.csv(surveys, "surveys_wtp22_23_ehb.csv")
+surveys <- read.csv("surveys_wtp22_23_ehb.csv") #with temp22-23 + elevation + hemlockbiomass
+
+#reprojection of data - have not run this code yet
 tmax2022 <- project(tmax2022, hemlockbiomass)
 
 surveys$tmax2022 <- extract(tmax2022, survey_points)

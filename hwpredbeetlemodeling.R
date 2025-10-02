@@ -123,11 +123,94 @@ plot(survey_points_p, add = T)
 write.csv(surveys, "surveys_wtp22_23_ehb.csv")
 surveys <- read.csv("surveys_wtp22_23_ehb.csv") #with temp22-23 + elevation + hemlockbiomass
 
-#reprojection of data - have not run this code yet
-tmax2022 <- project(tmax2022, hemlockbiomass)
-
-surveys$tmax2022 <- extract(tmax2022, survey_points)
-
 ##data analysis ####
 
+#updating columns
+surveys$X2022.Survey[surveys$X2022.Survey == "."] <- NA
+surveys$X2022.Survey <- as.numeric(surveys$X2022.Survey)
 
+surveys$X2023.Survey[surveys$X2023.Survey == "."] <- NA
+surveys$X2023.Survey <- as.numeric(surveys$X2023.Survey)
+
+surveys$X2024.Survey[surveys$X2024.Survey == "."] <- NA
+surveys$X2024.Survey <- as.numeric(surveys$X2024.Survey)
+
+#generalized linear modeling for presence vs variable
+tmax22model <- glm(X2022.Survey ~ tmax2022.mean,
+                   data = surveys,
+                   family = binomial,
+                   na.action = na.omit)
+summary(tmax22model) #negative effect, p value = 0.216
+
+tmin22model <- glm(X2022.Survey ~ tmin2022.mean,
+                   data = surveys,
+                   family = binomial,
+                   na.action = na.omit)
+summary(tmin22model) #negative effect, p value = 0.123
+
+precip22model <- glm(X2022.Survey ~ precip2022.mean,
+                     data = surveys,
+                     family = binomial,
+                     na.action = na.omit)
+summary(precip22model) #positive effect, p value = 0.290
+
+elevation22model <- glm(X2022.Survey ~ elevation.elevation,
+                        data = surveys,
+                        family = binomial,
+                        na.action = na.omit)
+summary(elevation22model) #p value = 0.654
+
+#renaming column bc that one was way too long
+names(surveys)[names(surveys) == "hemlockbiomass.Hosted_AGB_0261_2018_EASTERN_HEMLOCK_06062023072438"] <- "hemlock.biomass"
+
+hbiomass22model <- glm(X2022.Survey ~ hemlock.biomass,
+                       data = surveys,
+                       family = binomial,
+                       na.action = na.omit)
+summary(hbiomass22model) #p = 0.2667
+
+write.csv(surveys, "surveys_updated.csv")
+surveys <- read.csv("surveys_updated.csv")
+
+tmax23model <- glm(X2023.Survey ~ tmax2023.mean,
+                   data = surveys,
+                   family = binomial,
+                   na.action = na.omit)
+summary(tmax23model) #negative effect, p value = 0.191
+
+tmin23model <- glm(X2023.Survey ~ tmin2023.mean,
+                   data = surveys,
+                   family = binomial,
+                   na.action = na.omit)
+summary(tmin23model) #negative effect, p value = 0.663
+
+precip23model <- glm(X2023.Survey ~ precip2023.mean,
+                     data = surveys,
+                     family = binomial,
+                     na.action = na.omit)
+summary(precip23model) #positive effect, p value = 0.552
+
+tmax22model <- glm(X2022.Survey ~ tmax2022.mean,
+                   data = surveys,
+                   family = binomial,
+                   na.action = na.omit)
+summary(tmax22model) #negative effect, p value = 0.216
+
+tmin22model <- glm(X2022.Survey ~ tmin2022.mean,
+                   data = surveys,
+                   family = binomial,
+                   na.action = na.omit)
+summary(tmin22model) #negative effect, p value = 0.123
+
+#count released effect?
+surveys$Count[surveys$Count == "."] <- NA
+surveys$Count <- as.numeric(surveys$Count)
+
+count22model <- glm(X2022.Survey ~ Count,
+                    data = surveys,
+                    family = binomial,
+                    na.action = na.omit)
+summary(count22model) #p value = 0.949 #may not be used correctly
+
+write.csv(surveys, "surveys_updated.csv")
+surveys <- read.csv("surveys_updated.csv")

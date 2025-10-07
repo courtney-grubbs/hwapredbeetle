@@ -154,20 +154,20 @@ precip22model <- glm(X2022.Survey ~ precip2022.mean,
                      na.action = na.omit)
 summary(precip22model) #positive effect, p value = 0.290
 
-elevation22model <- glm(X2022.Survey ~ elevation.elevation,
+elevationmodel <- glm(ST.Status ~ elevation.elevation,
                         data = surveys,
                         family = binomial,
                         na.action = na.omit)
-summary(elevation22model) #p value = 0.654
+summary(elevationmodel) #p value = 0.30472
 
 #renaming column bc that one was way too long
 names(surveys)[names(surveys) == "hemlockbiomass.Hosted_AGB_0261_2018_EASTERN_HEMLOCK_06062023072438"] <- "hemlock.biomass"
 
-hbiomass22model <- glm(X2022.Survey ~ hemlock.biomass,
+hbiomassmodel <- glm(ST.Status ~ hemlock.biomass,
                        data = surveys,
                        family = binomial,
                        na.action = na.omit)
-summary(hbiomass22model) #p = 0.2667
+summary(hbiomassmodel) #p value = 0.97993
 
 write.csv(surveys, "surveys_updated.csv")
 surveys <- read.csv("surveys_updated.csv")
@@ -214,3 +214,8 @@ summary(count22model) #p value = 0.949 #may not be used correctly
 
 write.csv(surveys, "surveys_updated.csv")
 surveys <- read.csv("surveys_updated.csv")
+
+library(factoextra)
+fviz_nbclust(surveys[,c("tmax2022.mean", "tmin2022.mean", "elevation.elevation")], kmeans, method = "wss")
+km <- kmeans(surveys[,c("tmax2022.mean", "tmin2022.mean", "elevation.elevation")], centers = 4, nstart = 25)
+km

@@ -11,6 +11,7 @@ library(sf)
 library(terra)
 library(lubridate)
 library(factoextra)
+library(geosphere)
 
 data_dir <- "/Volumes/cmjone25"
 
@@ -106,7 +107,7 @@ plot(survey_points_p, add = T)
 write.csv(surveys, "surveys_updated.csv")
 surveys <- read.csv("surveys_updated.csv")
 
-##NEED tmax2024 and precip2024
+##NEED precip2024
 
 ##elevation####
 elevation <- rast(file.path("/Volumes/cmjone25/Data/Raster/USA/elevation", "dem_1s.tif"))
@@ -259,6 +260,7 @@ r <- rle(survey_tvals < -5)
 #consecutive runs below -5
 r$values[r$values == TRUE]  #TRUE blocks correspond to cold spells
 r$lengths[r$values == TRUE] #number of consecutive days below -5 for each block
+max(r$lengths[r$values == TRUE])
 
 #maximum consecutive cold spell length
 max_consec <- max(r$lengths[r$values == TRUE])
@@ -396,7 +398,274 @@ tmin2021c <- crop(tmin2021, buffers)
 tmin_mean2021 <- mean(tmin2021c)
 surveys$tmin2021 <- extract(tmin_mean2021, survey_points_p)
 
-write.csv(surveys, "surveys_alltminmeans.csv") #surveys with all 2005-2024 tmin means
+write.csv(surveys, "surveys_alltminmeans.csv") #surveys with all 2019-2024 tmin means
+
+##load tmax from 2005-2024 (take mean number of days) - trying to loop#####
+surveys <- read.csv("surveys_alltminmeans.csv")
+
+tmax2005 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2005.nc"))
+survey_points_p <- terra::project(survey_points, tmax2005)
+buffers <- buffer(survey_points_p, 5000)
+tmax2005c <- crop(tmax2005, buffers)
+tmax_mean2005 <- mean(tmax2005c)
+surveys$tmax2005 <- extract(tmax_mean2005, survey_points_p)
+
+tmax2006 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2006.nc"))
+survey_points_p <- terra::project(survey_points, tmax2006)
+buffers <- buffer(survey_points_p, 5000)
+tmax2006c <- crop(tmax2006, buffers)
+tmax_mean2006 <- mean(tmax2006c)
+surveys$tmax2006 <- extract(tmax_mean2006, survey_points_p)
+
+tmax2007 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2007.nc"))
+survey_points_p <- terra::project(survey_points, tmax2007)
+buffers <- buffer(survey_points_p, 5000)
+tmax2007c <- crop(tmax2007, buffers)
+tmax_mean2007 <- mean(tmax2007c)
+surveys$tmax2007 <- extract(tmax_mean2007, survey_points_p)
+
+tmax2008 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2008.nc"))
+survey_points_p <- terra::project(survey_points, tmax2008)
+buffers <- buffer(survey_points_p, 5000)
+tmax2008c <- crop(tmax2008, buffers)
+tmax_mean2008 <- mean(tmax2008c)
+surveys$tmax2008 <- extract(tmax_mean2008, survey_points_p)
+
+tmax2009 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2009.nc"))
+survey_points_p <- terra::project(survey_points, tmax2009)
+buffers <- buffer(survey_points_p, 5000)
+tmax2009c <- crop(tmax2009, buffers)
+tmax_mean2009 <- mean(tmax2009c)
+surveys$tmax2009 <- extract(tmax_mean2009, survey_points_p)
+
+tmax2010 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2010.nc"))
+survey_points_p <- terra::project(survey_points, tmax2010)
+buffers <- buffer(survey_points_p, 5000)
+tmax2010c <- crop(tmax2010, buffers)
+tmax_mean2010 <- mean(tmax2010c)
+surveys$tmax2010 <- extract(tmax_mean2010, survey_points_p)
+
+tmax2011 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2011.nc"))
+survey_points_p <- terra::project(survey_points, tmax2011)
+buffers <- buffer(survey_points_p, 5000)
+tmax2011c <- crop(tmax2011, buffers)
+tmax_mean2011 <- mean(tmax2011c)
+surveys$tmax2011 <- extract(tmax_mean2011, survey_points_p)
+
+tmax2012 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2012.nc"))
+survey_points_p <- terra::project(survey_points, tmax2012)
+buffers <- buffer(survey_points_p, 5000)
+tmax2012c <- crop(tmax2012, buffers)
+tmax_mean2012 <- mean(tmax2012c)
+surveys$tmax2012 <- extract(tmax_mean2012, survey_points_p)
+
+tmax2013 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2013.nc"))
+survey_points_p <- terra::project(survey_points, tmax2013)
+buffers <- buffer(survey_points_p, 5000)
+tmax2013c <- crop(tmax2013, buffers)
+tmax_mean2013 <- mean(tmax2013c)
+surveys$tmax2013 <- extract(tmax_mean2013, survey_points_p)
+
+tmax2014 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2014.nc"))
+survey_points_p <- terra::project(survey_points, tmax2014)
+buffers <- buffer(survey_points_p, 5000)
+tmax2014c <- crop(tmax2014, buffers)
+tmax_mean2014 <- mean(tmax2014c)
+surveys$tmax2014 <- extract(tmax_mean2014, survey_points_p)
+
+tmax2015 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2015.nc"))
+survey_points_p <- terra::project(survey_points, tmax2015)
+buffers <- buffer(survey_points_p, 5000)
+tmax2015c <- crop(tmax2015, buffers)
+tmax_mean2015 <- mean(tmax2015c)
+surveys$tmax2015 <- extract(tmax_mean2015, survey_points_p)
+
+tmax2016 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2016.nc"))
+survey_points_p <- terra::project(survey_points, tmax2016)
+buffers <- buffer(survey_points_p, 5000)
+tmax2016c <- crop(tmax2016, buffers)
+tmax_mean2016 <- mean(tmax2016c)
+surveys$tmax2016 <- extract(tmax_mean2016, survey_points_p)
+
+tmax2017 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2017.nc"))
+survey_points_p <- terra::project(survey_points, tmax2017)
+buffers <- buffer(survey_points_p, 5000)
+tmax2017c <- crop(tmax2017, buffers)
+tmax_mean2017 <- mean(tmax2017c)
+surveys$tmax2017 <- extract(tmax_mean2017, survey_points_p)
+
+tmax2018 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2018.nc"))
+survey_points_p <- terra::project(survey_points, tmax2018)
+buffers <- buffer(survey_points_p, 5000)
+tmax2018c <- crop(tmax2018, buffers)
+tmax_mean2018 <- mean(tmax2018c)
+surveys$tmax2018 <- extract(tmax_mean2018, survey_points_p)
+
+tmax2019 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2019.nc"))
+survey_points_p <- terra::project(survey_points, tmax2019)
+buffers <- buffer(survey_points_p, 5000)
+tmax2019c <- crop(tmax2019, buffers)
+tmax_mean2019 <- mean(tmax2019c)
+surveys$tmax2019 <- extract(tmax_mean2019, survey_points_p)
+
+tmax2020 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2020.nc"))
+survey_points_p <- terra::project(survey_points, tmax2020)
+buffers <- buffer(survey_points_p, 5000)
+tmax2020c <- crop(tmax2020, buffers)
+tmax_mean2020 <- mean(tmax2020c)
+surveys$tmax2020 <- extract(tmax_mean2020, survey_points_p)
+
+tmax2021 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2021.nc"))
+survey_points_p <- terra::project(survey_points, tmax2021)
+buffers <- buffer(survey_points_p, 5000)
+tmax2021c <- crop(tmax2021, buffers)
+tmax_mean2021 <- mean(tmax2021c)
+surveys$tmax2021 <- extract(tmax_mean2021, survey_points_p)
+
+tmax2022 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2022.nc"))
+survey_points_p <- terra::project(survey_points, tmax2022)
+buffers <- buffer(survey_points_p, 5000)
+tmax2022c <- crop(tmax2022, buffers)
+tmax_mean2022 <- mean(tmax2022c)
+surveys$tmax2022 <- extract(tmax_mean2022, survey_points_p)
+
+tmax2023 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2023.nc"))
+survey_points_p <- terra::project(survey_points, tmax2023)
+buffers <- buffer(survey_points_p, 5000)
+tmax2023c <- crop(tmax2023, buffers)
+tmax_mean2023 <- mean(tmax2023c)
+surveys$tmax2023 <- extract(tmax_mean2023, survey_points_p)
+
+tmax2024 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/tmax/daymet_v4_daily_na_tmax_2024.nc"))
+survey_points_p <- terra::project(survey_points, tmax2024)
+buffers <- buffer(survey_points_p, 5000)
+tmax2024c <- crop(tmax2024, buffers)
+tmax_mean2024 <- mean(tmax2024c)
+surveys$tmax2024 <- extract(tmax_mean2024, survey_points_p)
+
+write.csv(surveys, "surveys_alltempmeans.csv")
+surveys <- read_csv("surveys_alltempmeans.csv")
+
+##t max temps greater or equal to 30 reclassification
+rcl <- c(-Inf, 30, 0, 30, Inf, 1)
+rclmat <- matrix(rcl, ncol = 3, byrow = TRUE)
+
+tmax05ge30 <- terra::classify(tmax2005c, rclmat, right = TRUE)
+tmax05ge30_sum <- app(tmax05ge30, fun = "sum")
+t05daysover30 <- extract(tmax05ge30_sum, survey_points_p)
+
+tmax06ge30 <- terra::classify(tmax2006c, rclmat, right = TRUE)
+tmax06ge30_sum <- app(tmax06ge30, fun = "sum")
+t06daysover30 <- extract(tmax06ge30_sum, survey_points_p)
+
+tmax07ge30 <- terra::classify(tmax2007c, rclmat, right = TRUE)
+tmax07ge30_sum <- app(tmax07ge30, fun = "sum")
+t07daysover30 <- extract(tmax07ge30_sum, survey_points_p)
+
+tmax08ge30 <- terra::classify(tmax2008c, rclmat, right = TRUE)
+tmax08ge30_sum <- app(tmax08ge30, fun = "sum")
+t08daysover30 <- extract(tmax08ge30_sum, survey_points_p)
+
+tmax09ge30 <- terra::classify(tmax2009c, rclmat, right = TRUE)
+tmax09ge30_sum <- app(tmax09ge30, fun = "sum")
+t09daysover30 <- extract(tmax09ge30_sum, survey_points_p)
+
+tmax10ge30 <- terra::classify(tmax2010c, rclmat, right = TRUE)
+tmax10ge30_sum <- app(tmax10ge30, fun = "sum")
+t10daysover30 <- extract(tmax10ge30_sum, survey_points_p)
+
+tmax11ge30 <- terra::classify(tmax2011c, rclmat, right = TRUE)
+tmax11ge30_sum <- app(tmax11ge30, fun = "sum")
+t11daysover30 <- extract(tmax11ge30_sum, survey_points_p)
+
+tmax12ge30 <- terra::classify(tmax2012c, rclmat, right = TRUE)
+tmax12ge30_sum <- app(tmax12ge30, fun = "sum")
+t12daysover30 <- extract(tmax12ge30_sum, survey_points_p)
+
+tmax13ge30 <- terra::classify(tmax2013c, rclmat, right = TRUE)
+tmax13ge30_sum <- app(tmax13ge30, fun = "sum")
+t13daysover30 <- extract(tmax13ge30_sum, survey_points_p)
+
+tmax14ge30 <- terra::classify(tmax2014c, rclmat, right = TRUE)
+tmax14ge30_sum <- app(tmax14ge30, fun = "sum")
+t14daysover30 <- extract(tmax14ge30_sum, survey_points_p)
+
+tmax15ge30 <- terra::classify(tmax2015c, rclmat, right = TRUE)
+tmax15ge30_sum <- app(tmax15ge30, fun = "sum")
+t15daysover30 <- extract(tmax15ge30_sum, survey_points_p)
+
+tmax16ge30 <- terra::classify(tmax2016c, rclmat, right = TRUE)
+tmax16ge30_sum <- app(tmax16ge30, fun = "sum")
+t16daysover30 <- extract(tmax16ge30_sum, survey_points_p)
+
+tmax17ge30 <- terra::classify(tmax2017c, rclmat, right = TRUE)
+tmax17ge30_sum <- app(tmax17ge30, fun = "sum")
+t17daysover30 <- extract(tmax17ge30_sum, survey_points_p)
+
+tmax18ge30 <- terra::classify(tmax2018c, rclmat, right = TRUE)
+tmax18ge30_sum <- app(tmax18ge30, fun = "sum")
+t18daysover30 <- extract(tmax18ge30_sum, survey_points_p)
+
+tmax19ge30 <- terra::classify(tmax2019c, rclmat, right = TRUE)
+tmax19ge30_sum <- app(tmax19ge30, fun = "sum")
+t19daysover30 <- extract(tmax19ge30_sum, survey_points_p)
+
+tmax20ge30 <- terra::classify(tmax2020c, rclmat, right = TRUE)
+tmax20ge30_sum <- app(tmax20ge30, fun = "sum")
+t20daysover30 <- extract(tmax20ge30_sum, survey_points_p)
+
+tmax21ge30 <- terra::classify(tmax2021c, rclmat, right = TRUE)
+tmax21ge30_sum <- app(tmax21ge30, fun = "sum")
+t21daysover30 <- extract(tmax21ge30_sum, survey_points_p)
+
+tmax22ge30 <- terra::classify(tmax2022c, rclmat, right = TRUE)
+tmax22ge30_sum <- app(tmax22ge30, fun = "sum")
+t22daysover30 <- extract(tmax22ge30_sum, survey_points_p)
+
+tmax23ge30 <- terra::classify(tmax2023c, rclmat, right = TRUE)
+tmax23ge30_sum <- app(tmax23ge30, fun = "sum")
+t23daysover30 <- extract(tmax23ge30_sum, survey_points_p)
+
+tmax24ge30 <- terra::classify(tmax2024c, rclmat, right = TRUE)
+tmax24ge30_sum <- app(tmax24ge30, fun = "sum")
+t24daysover30 <- extract(tmax24ge30_sum, survey_points_p)
+
+
+all_yearsover30c <- c(tmax05ge30_sum, tmax06ge30_sum, tmax07ge30_sum, 
+                tmax08ge30_sum, tmax09ge30_sum, tmax10ge30_sum,
+                tmax11ge30_sum, tmax12ge30_sum, tmax13ge30_sum,
+                tmax14ge30_sum, tmax15ge30_sum, tmax16ge30_sum,
+                tmax17ge30_sum, tmax18ge30_sum, tmax19ge30_sum,
+                tmax20ge30_sum, tmax21ge30_sum, tmax22ge30_sum, 
+                tmax23ge30_sum, tmax24ge30_sum)
+
+mean_days_over30c <- app(all_yearsover30c, fun="mean")
+sd_days_over30c <- app(all_yearsover30c, fun="sd")
+
+survey_points_proj <- project(survey_points, crs(mean_days_over30c))
+meanover30_vals <- terra::extract(mean_days_over30c, survey_points_proj)
+surveys_with_meanover30 <- cbind(surveys, meanover30_vals)
+colnames(surveys_with_meanover30)[colnames(surveys_with_meanover30) == "mean"] <- "all_years_mean_days_over30"
+
+mean_over30_model <- glm(ST.Status ~ all_years_mean_days_over30, 
+                         data = surveys_with_meanover30, 
+                         family = binomial)
+summary(mean_over30_model) #negative effect, p value = 0.222
+
+boxplot(all_years_mean_days_over30 ~ ST.Status, data = surveys_with_meanover30,
+        xlab = "Species Presence (0=absent,1=present)",
+        ylab = "Mean Greater or Equal to 30°C")
+
+means_over30_plot <- ggplot(surveys_with_meanover30, aes(x = factor(ST.Status), y = all_years_mean_days_over30)) +
+  geom_boxplot() +
+  stat_summary(fun = mean, geom = "point", shape = 4, color = "red", size = 3) +
+  xlab("Species Presence (0=absent,1=present)") +
+  ylab("Mean Greater or Equal to 30°C") +
+  theme_minimal()
+ggsave(ggsave("meandaysover30_presence.png", plot = means_over30_plot, width = 6, height = 4, dpi = 300))
+plot(means_over30_plot)
+
+write.csv(surveys_with_meanover30, "surveys_with_meanover30.csv")
 
 ##all_yearsc < c(tmin22_23r_sum, tmin23_24r_sum, etc.) stacked days below -5 ####
 
@@ -516,11 +785,138 @@ all_yearsc <- c(tmin05_06r_sum, tmin06_07r_sum, tmin07_08r_sum,
                tmin20_21r_sum, tmin21_22r_sum, tmin22_23r_sum, 
                tmin23_24r_sum) ###stacked days below -5
 
-#mean_days_below5c <- app(all_yearsc, fun "mean") + fun = sd ####
+#mean_days_below-5c <- app(all_yearsc, fun "mean") + fun = sd ####
 mean_days_below5c <- app(all_yearsc, fun="mean")
 sd_days_below5c <- app(all_yearsc, fun="sd")
+max_days_below5c <- app(all_yearsc, fun="max") #test min too and add to surveys to run St.Status
 
-#run against survey presence ####
-survey_points <- vect(surveys, geom = c("Lon", "Lat"), crs = crs(all_yearsc))
+survey_points_proj <- project(survey_points, crs(mean_days_below5c))
+mean_vals <- terra::extract(mean_days_below5c, survey_points_proj)
+surveys_with_mean <- cbind(surveys, mean_vals)
+colnames(surveys_with_mean)[colnames(surveys_with_mean) == "mean"] <- "all_years_mean_days_belowneg5"
 
+boxplot(all_years_mean_days_belowneg5 ~ ST.Status, data = surveys_with_mean,
+        xlab = "Species Presence (0=absent,1=present)",
+        ylab = "Mean Days Below -5°C")
 
+means_below5_plot <- ggplot(surveys_with_mean, aes(x = factor(ST.Status), y = all_years_mean_days_belowneg5)) +
+  geom_boxplot() +
+  stat_summary(fun = mean, geom = "point", shape = 4, color = "red", size = 3) +
+  xlab("Species Presence (0=absent,1=present)") +
+  ylab("Mean Days Below -5°C") +
+  theme_minimal()
+ggsave(ggsave("meandaysbelow5_presence.png", plot = means_below5_plot, width = 6, height = 4, dpi = 300))
+
+mean_below5_model <- glm(ST.Status ~ all_years_mean_days_belowneg5, 
+                 data = surveys_with_mean, 
+                 family = binomial)
+summary(mean_below5_model) #p val = 0.346
+
+#number of consec days below -5 all
+
+test <- function(x) {
+  r <- rle(x < -5)
+  #consecutive runs below -5
+  r$lengths[r$values == TRUE] #number of consecutive days below -5 for each block
+  print(r$lengths[r$values == TRUE])
+  max(r$lengths[r$values == TRUE])
+}
+
+tmin20_21r_consecdays <- app(tmin20_21r, fun=test)
+
+surveys_alltminmeans <- read_csv("surveys_alltminmeans.csv")
+
+##site to site proximity as variable####
+survey_points_proj <- project(survey_points, crs(nc))
+buffers_10km <- buffer(survey_points_proj, width = 10000)
+buffers_5km <- buffer(survey_points_proj, width = 5000)
+buffers_1km <- buffer(survey_points_proj, width = 1000)
+
+plot(nc, col = "gray90", border = "white")
+plot(survey_points, add = TRUE, col = "black", pch = 19, cex = 0.5)
+#10km buffer plot
+plot(buffers_10km, add = TRUE, border = "green", lwd = 1)
+#5km buffer plot
+plot(buffers_5km, add = TRUE, border = "blue", lwd = 1)
+#1km buffer plot
+plot(buffers_1km, add = TRUE, border = "red", lwd = 1)
+#precense points
+presence_subset <- surveys[surveys$ST.Status == "1", ]
+presence_points <- vect(presence_subset, geom = c("Lon", "Lat"), crs("epsg:4326")) 
+plot(presence_points, add = TRUE, col = "yellow", pch = 19, cex = 0.5)
+
+#10km overlap
+overlap10km_matrix <- relate(survey_points_proj, buffers_10km, relation = "intersects")
+overlap10km_count <- rowSums(overlap10km_matrix) - 1
+surveys$overlap_count10km <- overlap10km_count
+surveys$overlap10km_binary <- ifelse(overlap10km_count > 0, 1, 0) #count may be more effective than binary
+glm_overlap10km <- glm(ST.Status ~ overlap10km_count, data = surveys, family = binomial)
+summary(glm_overlap10km) #negative effect, p value = 0.49701
+
+#5km overlap
+overlap5km_matrix <- relate(survey_points_proj, buffers_5km, "intersects")
+overlap5km_count <- rowSums(overlap5km_matrix) - 1
+surveys$overlap_count5km <- overlap5km_count
+surveys$overlap5km_binary <- ifelse(overlap5km_count > 0, 1, 0)
+glm_overlap5km <- glm(ST.Status ~ overlap5km_count, data = surveys, family = binomial)
+summary(glm_overlap5km) #negative effect, p value = 0.0621
+
+#1km overlap
+overlap1km_matrix <- relate(survey_points_proj, buffers_1km, "intersects")
+overlap1km_count <- rowSums(overlap1km_matrix) - 1
+surveys$overlap_count1km <- overlap1km_count
+surveys$overlap1km_binary <- ifelse(overlap1km_count > 0, 1, 0) 
+glm_overlap1km <- glm(ST.Status ~ overlap1km_count, data = surveys, family = binomial)
+summary(glm_overlap1km) #positive effect, p value = 0.837
+
+write.csv(surveys, "surveys_distances.csv")
+
+surveys <- read.csv("surveys_updated.csv")
+
+dist_matrix <- distance(survey_points_proj)
+dist_df <- as.data.frame(as.table(as.matrix(dist_matrix)))
+dist_df <- subset(dist_df, as.numeric(Var1) < as.numeric(Var2))
+names(dist_df) <- c("site1", "site2", "distance_m")
+dist_10km_sites <- subset(dist_df, distance_m <= 10000)
+dist_5km_sites <- subset(dist_df, distance_m <= 5000)
+
+dist_matrix <- as.matrix(dist_matrix)
+rownames(dist_matrix) <- surveys$X
+colnames(dist_matrix) <- surveys$X
+
+##unique pairs
+sites_prox10km <- unique(c(dist_10km_sites$site1, dist_10km_sites$site2))
+surveys$sites_prox10km <- ifelse(surveys$X %in% sites_prox10km, 1, 0)
+glm_dist10km <- glm(ST.Status ~ sites_prox10km, data = surveys, family = binomial)
+summary(glm_dist10km) #negative effect, p value = 0.485
+
+sites_prox5km <- unique(c(dist_5km_sites$site1, dist_5km_sites$site2))
+surveys$sites_prox5km <- ifelse(surveys$X %in% sites_prox5km, 1, 0)
+glm_dist5km <- glm(ST.Status ~ sites_prox5km, data = surveys, family = binomial)
+summary(glm_dist5km) ###wrong showing same values as 10km
+
+surveys$prox_5km <- apply(dist_matrix < 5000, 1, any)
+surveys$prox_10km <- apply(dist_matrix < 10000, 1, any)
+
+table(surveys$sites_prox10km, surveys$sites_prox5km)
+
+#trying dist matrix with geosphere
+sitecoords <- as.matrix(surveys[, c("Lon", "Lat")])
+geodist_matrix <- distm(sitecoords, sitecoords, fun = distHaversine)
+geodist_matrix[lower.tri(dist_matrix, diag = TRUE)] <- NA
+sites_prx5km_g <- which(dist_matrix <= 5000, arr.ind = TRUE)
+
+##need to combine columns into one "surveys"
+
+##kmeans again
+fviz_nbclust(surveys_with_meanover30[,c("all_years_mean_days_over30", "precip2022.mean", "elevation.elevation")], kmeans, method = "wss")
+km <- kmeans(surveys_with_meanover30[,c("all_years_mean_days_over30", "precip2022.mean", "elevation.elevation")], centers = 4, nstart = 25)
+km
+
+surveys_with_meanover30$cluster <- km$cluster
+
+boxplot(cluster ~ ST.Status, data = surveys_with_meanover30,
+        xlab = "Species Presence (0=absent,1=present)",
+        ylab = "cluster")
+
+table(surveys_with_meanover30$ST.Status, surveys_with_meanover30$cluster)

@@ -644,6 +644,15 @@ plot(means_over30_plot)
 
 
 #normalize means first ####
+str(surveys)
+summary(surveys)
+
+surveys$elevation_z <- scale(surveys$elevation)
+mean(surveys$elevation_z)
+sd(surveys$elevation_z)
+
+write.csv(surveys, "surveys_clean.csv")
+surveys <- read.csv("surveys_clean.csv")
 
 #k means clustering ####
 fviz_nbclust(surveys[,c("all_years_mean_days_over30", "precip2022.mean", "all_years_mean_days_belowneg5", "elevation.elevation", "overlap_count5km")], kmeans, method = "wss")

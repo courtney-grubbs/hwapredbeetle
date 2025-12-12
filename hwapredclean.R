@@ -14,9 +14,9 @@ library(factoextra)
 library(geosphere)
 library(tidyverse)
 
-#set for this session
-Sys.setenv(PROJ_LIB = "/Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/terra/proj.db")
-#verify
+# #set for this session
+Sys.setenv(PROJ_LIB = "/Library/Frameworks/R.framework/Versions/4.5-arm64/Resources/library/sf/proj/")
+# #verify
 Sys.getenv("PROJ_LIB")
 file.exists(file.path(Sys.getenv("PROJ_LIB"), "proj.db"))
 
@@ -40,154 +40,169 @@ precip2005 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daym
 survey_points_p <- terra::project(survey_points, precip2005)
 buffers <- buffer(survey_points_p, 5000)
 precip2005c <- crop(precip2005, buffers)
-precip_mean2005 <- mean(precip2005c)
-surveys$precip2005 <- extract(precip_mean2005, survey_points_p)
+precip_sum2005 <- sum(precip2005c)
+surveys$precip2005 <- extract(precip_sum2005, survey_points_p)
 
 precip2006 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2006.nc"))
 survey_points_p <- terra::project(survey_points, precip2006)
 buffers <- buffer(survey_points_p, 5000)
 precip2006c <- crop(precip2006, buffers)
-precip_mean2006 <- mean(precip2006c)
-surveys$precip2006 <- extract(precip_mean2006, survey_points_p)
+precip_sum2006 <- sum(precip2006c)
+surveys$precip2006 <- extract(precip_sum2006, survey_points_p)
 
 precip2007 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2007.nc"))
 survey_points_p <- terra::project(survey_points, precip2007)
 buffers <- buffer(survey_points_p, 5000)
 precip2007c <- crop(precip2007, buffers)
-precip_mean2007 <- mean(precip2007c)
-surveys$precip2007 <- extract(precip_mean2007, survey_points_p)
+precip_sum2007 <- sum(precip2007c)
+surveys$precip2007 <- extract(precip_sum2007, survey_points_p)
 
 precip2008 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2008.nc"))
 survey_points_p <- terra::project(survey_points, precip2008)
 buffers <- buffer(survey_points_p, 5000)
 precip2008c <- crop(precip2008, buffers)
-precip_mean2008 <- mean(precip2008c)
-surveys$precip2008 <- extract(precip_mean2008, survey_points_p)
+precip_sum2008 <- sum(precip2008c)
+surveys$precip2008 <- extract(precip_sum2008, survey_points_p)
 
 precip2009 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2009.nc"))
 survey_points_p <- terra::project(survey_points, precip2009)
 buffers <- buffer(survey_points_p, 5000)
 precip2009c <- crop(precip2009, buffers)
-precip_mean2009 <- mean(precip2009c)
-surveys$precip2009 <- extract(precip_mean2009, survey_points_p)
+precip_sum2009 <- sum(precip2009c)
+surveys$precip2009 <- extract(precip_sum2009, survey_points_p)
 
 precip2010 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2010.nc"))
 survey_points_p <- terra::project(survey_points, precip2010)
 buffers <- buffer(survey_points_p, 5000)
 precip2010c <- crop(precip2010, buffers)
-precip_mean2010 <- mean(precip2010c)
-surveys$precip2010 <- extract(precip_mean2010, survey_points_p)
+precip_sum2010 <- sum(precip2010c)
+surveys$precip2010 <- extract(precip_sum2010, survey_points_p)
 
 precip2011 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2011.nc"))
 survey_points_p <- terra::project(survey_points, precip2011)
 buffers <- buffer(survey_points_p, 5000)
 precip2011c <- crop(precip2011, buffers)
-precip_mean2011 <- mean(precip2011c)
-surveys$precip2011 <- extract(precip_mean2011, survey_points_p)
+precip_sum2011 <- sum(precip2011c)
+surveys$precip2011 <- extract(precip_sum2011, survey_points_p)
 
 precip2012 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2012.nc"))
 survey_points_p <- terra::project(survey_points, precip2012)
 buffers <- buffer(survey_points_p, 5000)
 precip2012c <- crop(precip2012, buffers)
-precip_mean2012 <- mean(precip2012c)
-surveys$precip2012 <- extract(precip_mean2012, survey_points_p)
+precip_sum2012 <- sum(precip2012c)
+surveys$precip2012 <- extract(precip_sum2012, survey_points_p)
 
 precip2013 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2013.nc"))
 survey_points_p <- terra::project(survey_points, precip2013)
 buffers <- buffer(survey_points_p, 5000)
 precip2013c <- crop(precip2013, buffers)
-precip_mean2013 <- mean(precip2013c)
-surveys$precip2013 <- extract(precip_mean2013, survey_points_p)
+precip_sum2013 <- sum(precip2013c)
+surveys$precip2013 <- extract(precip_sum2013, survey_points_p)
 
 precip2014 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2014.nc"))
 survey_points_p <- terra::project(survey_points, precip2014)
 buffers <- buffer(survey_points_p, 5000)
 precip2014c <- crop(precip2014, buffers)
-precip_mean2014 <- mean(precip2014c)
-surveys$precip2014 <- extract(precip_mean2014, survey_points_p)
+precip_sum2014 <- sum(precip2014c)
+surveys$precip2014 <- extract(precip_sum2014, survey_points_p)
 
 precip2015 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2015.nc"))
 survey_points_p <- terra::project(survey_points, precip2015)
 buffers <- buffer(survey_points_p, 5000)
 precip2015c <- crop(precip2015, buffers)
-precip_mean2015 <- mean(precip2015c)
-surveys$precip2015 <- extract(precip_mean2015, survey_points_p)
+precip_sum2015 <- sum(precip2015c)
+surveys$precip2015 <- extract(precip_sum2015, survey_points_p)
 
 precip2016 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2016.nc"))
 survey_points_p <- terra::project(survey_points, precip2016)
 buffers <- buffer(survey_points_p, 5000)
 precip2016c <- crop(precip2016, buffers)
-precip_mean2016 <- mean(precip2016c)
-surveys$precip2016 <- extract(precip_mean2016, survey_points_p)
+precip_sum2016 <- sum(precip2016c)
+surveys$precip2016 <- extract(precip_sum2016, survey_points_p)
 
 precip2017 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2017.nc"))
 survey_points_p <- terra::project(survey_points, precip2017)
 buffers <- buffer(survey_points_p, 5000)
 precip2017c <- crop(precip2017, buffers)
-precip_mean2017 <- mean(precip2017c)
-surveys$precip2017 <- extract(precip_mean2017, survey_points_p)
+precip_sum2017 <- sum(precip2017c)
+surveys$precip2017 <- extract(precip_sum2017, survey_points_p)
 
 precip2018 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2018.nc"))
 survey_points_p <- terra::project(survey_points, precip2018)
 buffers <- buffer(survey_points_p, 5000)
 precip2018c <- crop(precip2018, buffers)
-precip_mean2018 <- mean(precip2018c)
-surveys$precip2018 <- extract(precip_mean2018, survey_points_p)
+precip_sum2018 <- sum(precip2018c)
+surveys$precip2018 <- extract(precip_sum2018, survey_points_p)
 
 precip2019 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2019.nc"))
 survey_points_p <- terra::project(survey_points, precip2019)
 buffers <- buffer(survey_points_p, 5000)
 precip2019c <- crop(precip2019, buffers)
-precip_mean2019 <- mean(precip2019c)
-surveys$precip2019 <- extract(precip_mean2019, survey_points_p)
+precip_sum2019 <- sum(precip2019c)
+surveys$precip2019 <- extract(precip_sum2019, survey_points_p)
 
 precip2020 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2020.nc"))
 survey_points_p <- terra::project(survey_points, precip2020)
 buffers <- buffer(survey_points_p, 5000)
 precip2020c <- crop(precip2020, buffers)
-precip_mean2020 <- mean(precip2020c)
-surveys$precip2020 <- extract(precip_mean2020, survey_points_p)
+precip_sum2020 <- sum(precip2020c)
+surveys$precip2020 <- extract(precip_sum2020, survey_points_p)
 
 precip2021 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2021.nc"))
 survey_points_p <- terra::project(survey_points, precip2021)
 buffers <- buffer(survey_points_p, 5000)
 precip2021c <- crop(precip2021, buffers)
-precip_mean2021 <- mean(precip2021c)
-surveys$precip2021 <- extract(precip_mean2021, survey_points_p)
+precip_sum2021 <- sum(precip2021c)
+surveys$precip2021 <- extract(precip_sum2021, survey_points_p)
 
-surveys$precip2022 <- extract(precip_mean2022, survey_points_p)
 precip2022 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2022.nc"))
 survey_points_p <- terra::project(survey_points, precip2022)
 buffers <- buffer(survey_points_p, 5000)
 precip2022c <- crop(precip2022, buffers)
-precip_mean2022 <- mean(precip2022c)
-surveys$precip2022 <- extract(precip_mean2022, survey_points_p)
-plot(precip_mean2022)
-plot(survey_points_p, add = T)
+precip_sum2022 <- sum(precip2022c)
+surveys$precip2022 <- extract(precip_sum2022, survey_points_p)
 
 precip2023 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2023.nc"))
 survey_points_p <- terra::project(survey_points, precip2023)
 buffers <- buffer(survey_points_p, 5000)
 precip2023c <- crop(precip2023, buffers)
-precip_mean2023 <- mean(precip2023c)
-surveys$precip2023 <- extract(precip_mean2023, survey_points_p)
-plot(precip_mean2023)
-plot(survey_points_p, add = T)
+precip_sum2023 <- sum(precip2023c)
+surveys$precip2023 <- extract(precip_sum2023, survey_points_p)
 
 precip2024 <- rast(file.path("/Volumes/cmjone25/Data/Original/Daymet/precip/daymet_v4_daily_na_prcp_2024.nc"))
 survey_points_p <- terra::project(survey_points, precip2024)
 buffers <- buffer(survey_points_p, 5000)
 precip2024c <- crop(precip2024, buffers)
-precip_mean2024 <- mean(precip2024c)
-surveys$precip2024 <- extract(precip_mean2024, survey_points_p)
+precip_sum2024 <- sum(precip2024c)
+surveys$precip2024 <- extract(precip_sum2024, survey_points_p)
 
-all_yearsmeanprecipc <-c(precip_mean2005, precip_mean2006, precip_mean2007, precip_mean2008,
-                         precip_mean2009, precip_mean2010, precip_mean2011, precip_mean2012,
-                         precip_mean2012, precip_mean2013, precip_mean2014, precip_mean2015,
-                         precip_mean2016, precip_mean2017, precip_mean2018, precip_mean2019,
-                         precip_mean2020, precip_mean2021, precip_mean2022, precip_mean2023,
-                         precip_mean2024)
+all_yearssumprecipc <-c(precip_sum2005, precip_sum2006, precip_sum2007, precip_sum2008,
+                         precip_sum2009, precip_sum2010, precip_sum2011, precip_sum2012,
+                         precip_sum2012, precip_sum2013, precip_sum2014, precip_sum2015,
+                         precip_sum2016, precip_sum2017, precip_sum2018, precip_sum2019,
+                         precip_sum2020, precip_sum2021, precip_sum2022, precip_sum2023,
+                         precip_sum2024)
+#save checkpoint####
+write.csv(surveys, "surveys_clean.csv")
+surveys <- read.csv("surveys_clean.csv")
+#mean precip####
+mean_days_sumprecipc <- app(all_yearssumprecipc, fun="mean")
+sd_days_sumprecipc <- app(all_yearssumprecipc, fun="sd")
+max_days_sumprecipc <- app(all_yearssumprecipc, fun="max")
+min_days_sumprecipc <- app(all_yearssumprecipc, fun="min")
 
+survey_points_proj <- project(survey_points, crs(mean_days_sumprecipc))
+meansumprecip_vals <- terra::extract(mean_days_sumprecipc, survey_points_proj)
+surveys <- cbind(surveys, meansumprecip_vals)
+colnames(surveys)[colnames(surveys) == "mean"] <- "all_years_mean_sumprecip"
+
+survey_points_proj <- project(survey_points, crs(sd_days_sumprecipc))
+sdsumprecip_vals <- terra::extract(sd_days_sumprecipc, survey_points_proj)
+surveys <- cbind(surveys, sdsumprecip_vals)
+colnames(surveys)[colnames(surveys) == "sd"] <- "all_years_sd_sumprecip"
+
+write.csv(surveys, "surveys_clean.csv")
+surveys <- read.csv("surveys_clean.csv")
 ##elevation ####
 elevation <- rast(file.path("/Volumes/cmjone25/Data/Raster/USA/elevation", "dem_1s.tif"))
 survey_points_p <- terra::project(survey_points, elevation)
@@ -790,9 +805,9 @@ summary(surveys)
 
 normalized_data <- data.frame(allover30_normalized = scale(surveys$all_years_mean_days_over30),
                               allbelowneg5_normalized = scale(surveys$all_years_mean_days_belowneg5),
-                              precip_normalized = scale(surveys$precip2022.mean),
                               eleveation_normalized = scale(surveys$elevation),
-                              overlap5kmcount_noramlized = scale(surveys$overlap_count5km)
+                              overlap5kmcount_noramlized = scale(surveys$overlap_count5km),
+                              allprecip_normalized = scale(surveys$all_years_mean_sumprecip)
 )
 
 
@@ -810,7 +825,7 @@ boxplot(cluster ~ ST.Status, data = surveys,
         xlab = "Species Presence (0=absent,1=present)",
         ylab = "cluster")
 
-table(surveys$ST.Status, surveys$cluster) #cluster 1 and cluster 3 meaningfully different
+table(surveys$ST.Status, surveys$cluster)
 
 aggregate(is.na(surveys$hemlockbiomass), by = list(surveys$ST.Status), FUN = sum)
 sum(surveys$ST.Status == 1)
